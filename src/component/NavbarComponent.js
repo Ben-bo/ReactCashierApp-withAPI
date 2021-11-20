@@ -2,12 +2,14 @@ import React from "react";
 import { Nav, NavDropdown, Container, Navbar } from "react-bootstrap";
 const Navbarcomponent = () => {
   return (
-    <Navbar bg="success" expand="lg" variant="dark">
+    <Navbar bg="success" expand="lg" variant="dark" className="mb-3">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href="#home">
+          <strong>My CashierApp</strong>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="me-auto active">
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#link">Link</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
