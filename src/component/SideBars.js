@@ -1,7 +1,22 @@
 import React, { Component } from "react";
-import { Col, ListGroup } from "react-bootstrap";
+import { Row, Col, ListGroup } from "react-bootstrap";
 import axios from "axios";
 import { API_URL } from "../utils/constant";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUtensils,
+  faCoffee,
+  faCheese,
+} from "@fortawesome/free-solid-svg-icons";
+
+const Icon = ({ nama }) => {
+  if (nama === "Makanan")
+    return <FontAwesomeIcon icon={faUtensils} className="" />;
+  if (nama === "Minuman")
+    return <FontAwesomeIcon icon={faCoffee} className="" />;
+  if (nama === "Cemilan")
+    return <FontAwesomeIcon icon={faCheese} className="" />;
+};
 
 class Sidebars extends Component {
   constructor(props) {
@@ -24,6 +39,7 @@ class Sidebars extends Component {
   }
   render() {
     const { categories } = this.state;
+    const { changeCategory, choosenCategory } = this.props;
     return (
       <Col md={2} mt="2">
         <h3>Side Bars</h3>
@@ -31,7 +47,21 @@ class Sidebars extends Component {
         <ListGroup as="ul">
           {categories &&
             categories.map((data) => (
-              <ListGroup.Item as="li">{data.nama}</ListGroup.Item>
+              <ListGroup.Item
+                as="li"
+                onClick={() => changeCategory(data.nama)}
+                className={
+                  choosenCategory === data.nama && "bg-success text-white"
+                }
+                style={{ cursor: "pointer" }}
+              >
+                <Row>
+                  <Col md={2}>
+                    <Icon nama={data.nama} />
+                  </Col>
+                  <Col md={10}>{data.nama}</Col>
+                </Row>
+              </ListGroup.Item>
             ))}
         </ListGroup>
       </Col>
