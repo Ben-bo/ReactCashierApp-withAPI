@@ -1,10 +1,10 @@
 import React from "react";
 import { Col, Card, Button } from "react-bootstrap";
 import formatNumber from "../utils/formatNumber";
-const Menu = ({ menu }) => {
+const Menu = ({ menuk: menu, cartValue: dataCart }) => {
   return (
     <Col md={4} xs={6} className="mb-2 d-flex">
-      <Card className="shadow-sm p-3 w-100">
+      <Card className="shadow-sm p-3 w-100" onClick={() => dataCart(menu)}>
         <Card.Img
           variant="top"
           src={`assets/images/${menu.category.nama}/${menu.gambar}`}
