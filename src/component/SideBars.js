@@ -37,12 +37,13 @@ class Sidebars extends Component {
         console.log(e);
       });
   }
+
   render() {
     const { categories } = this.state;
     const { changeCategory, choosenCategory } = this.props;
     return (
       <Col md={2} mt="2">
-        <h3>Side Bars</h3>
+        <h4>Category</h4>
         <hr />
         <ListGroup as="ul">
           {categories &&

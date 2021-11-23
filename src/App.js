@@ -17,16 +17,43 @@ class App extends Component {
     };
   }
   componentDidMount() {
+    //menampilkan menu berdasarkan category default
     axios
       .get(`${API_URL}products?category.nama=${this.state.choosenCategory}`)
       .then((res) => {
         const products = res.data;
-        this.setState({ menus: products });
+        this.setState({ menus: products }); //simpan produk ke state menus
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    // menampilkan data yang sudah diinputkan ke keranjang
+    axios
+      .get(`${API_URL}keranjangs`)
+      .then((res) => {
+        const products = res.data;
+        this.setState({ cart: products }); //simpan produk ke state cart
       })
       .catch((e) => {
         console.log(e);
       });
   }
+  // menampilkan data cart secara realtime
+  componentDidUpdate(prevState) {
+    if (this.state.cart !== prevState.cart) {
+      axios
+        .get(`${API_URL}keranjangs`)
+        .then((res) => {
+          const products = res.data;
+          this.setState({ cart: products }); //simpan produk ke state cart
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }
+  // method untuk mengubah
   changeCategory = (value) => {
     this.setState({
       choosenCategory: value,
@@ -117,7 +144,7 @@ class App extends Component {
       });
   };
   render() {
-    const { menus, choosenCategory } = this.state;
+    const { menus, choosenCategory, cart } = this.state;
     return (
       <div className="App">
         <Navbarcomponent />
@@ -128,7 +155,7 @@ class App extends Component {
               choosenCategory={choosenCategory}
             />
             <Col>
-              <h3>Daftar produk</h3>
+              <h4>Daftar produk</h4>
               <hr />
               <Row>
                 {menus &&
@@ -141,7 +168,7 @@ class App extends Component {
                   ))}
               </Row>
             </Col>
-            <Result />
+            <Result dataCart={cart} />
           </Row>
         </Container>
       </div>
