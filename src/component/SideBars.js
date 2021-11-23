@@ -43,7 +43,7 @@ class Sidebars extends Component {
     const { changeCategory, choosenCategory } = this.props;
     return (
       <Col md={2} mt="2">
-        <h4>Category</h4>
+        <h5>Category</h5>
         <hr />
         <ListGroup as="ul">
           {categories &&

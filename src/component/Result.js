@@ -7,7 +7,7 @@ class Result extends Component {
     const { dataCart } = this.props;
     return (
       <Col md={3} mt="2">
-        <h4>ShopCart</h4>
+        <h5>ShopCart</h5>
         <hr />
         <ListGroup variant="flush">
           {dataCart &&
