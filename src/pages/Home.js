@@ -29,15 +29,7 @@ class Home extends Component {
       });
 
     // menampilkan data yang sudah diinputkan ke keranjang
-    axios
-      .get(`${API_URL}keranjangs`)
-      .then((res) => {
-        const products = res.data;
-        this.setState({ cart: products }); //simpan produk ke state cart
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    this.getListCart();
   }
   // menampilkan data cart secara realtime
   // componentDidUpdate(prevState) {
@@ -53,6 +45,18 @@ class Home extends Component {
   //       });
   //   }
   // }
+
+  getListCart = () => {
+    axios
+      .get(`${API_URL}keranjangs`)
+      .then((res) => {
+        const products = res.data;
+        this.setState({ cart: products }); //simpan produk ke state cart
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   // method untuk mengubah
   changeCategory = (value) => {
     this.setState({
@@ -82,6 +86,7 @@ class Home extends Component {
           axios
             .post(`${API_URL}keranjangs`, dataCart)
             .then((res) => {
+              this.getListCart();
               swal({
                 title: "Sucess",
                 text: `${dataCart.produk.nama} telah berhasil ditambahkan di keranjang`,
@@ -104,6 +109,7 @@ class Home extends Component {
               axios
                 .put(`${API_URL}keranjangs/${res.data[i].id}`, dataCart)
                 .then((res) => {
+                  this.getListCart();
                   swal({
                     title: "Sucess",
                     text: `${dataCart.produk.nama} telah berhasil ditambahkan di keranjang`,
@@ -124,6 +130,7 @@ class Home extends Component {
               axios
                 .post(`${API_URL}keranjangs`, dataCart)
                 .then((res) => {
+                  this.getListCart();
                   swal({
                     title: "Sucess",
                     text: `${dataCart.produk.nama} telah berhasil ditambahkan di keranjang`,
@@ -144,7 +151,6 @@ class Home extends Component {
       });
   };
   render() {
-    console.log("dari menu", this.context.history);
     const { menus, choosenCategory, cart } = this.state;
     return (
       <div className="App">
