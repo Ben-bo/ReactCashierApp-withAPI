@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Col, ListGroup, Badge, Row } from "react-bootstrap";
 import Formatnumber from "../utils/formatNumber";
+import Totalpayment from "./TotalPayment";
 
 class Result extends Component {
   render() {
@@ -12,7 +13,7 @@ class Result extends Component {
         <ListGroup variant="flush">
           {dataCart &&
             dataCart.map((data) => (
-              <ListGroup.Item>
+              <ListGroup.Item key={data.id}>
                 <Row>
                   <Col md={6}>
                     <strong>{data.produk.nama}</strong>
@@ -29,6 +30,7 @@ class Result extends Component {
               </ListGroup.Item>
             ))}
         </ListGroup>
+        <Totalpayment dataCart={dataCart} />
       </Col>
     );
   }

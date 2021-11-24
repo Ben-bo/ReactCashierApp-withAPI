@@ -49,6 +49,7 @@ class Sidebars extends Component {
           {categories &&
             categories.map((data) => (
               <ListGroup.Item
+                key={data.id}
                 as="li"
                 onClick={() => changeCategory(data.nama)}
                 className={
