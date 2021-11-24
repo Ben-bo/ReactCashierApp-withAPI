@@ -40,19 +40,19 @@ class Home extends Component {
       });
   }
   // menampilkan data cart secara realtime
-  //   componentDidUpdate(prevState) {
-  //     if (this.state.cart !== prevState.cart) {
-  //       axios
-  //         .get(`${API_URL}keranjangs`)
-  //         .then((res) => {
-  //           const products = res.data;
-  //           this.setState({ cart: products }); //simpan produk ke state cart
-  //         })
-  //         .catch((e) => {
-  //           console.log(e);
-  //         });
-  //     }
+  // componentDidUpdate(prevState) {
+  //   if (this.state.cart !== prevState.cart) {
+  //     axios
+  //       .get(`${API_URL}keranjangs`)
+  //       .then((res) => {
+  //         const products = res.data;
+  //         this.setState({ cart: products }); //simpan produk ke state cart
+  //       })
+  //       .catch((e) => {
+  //         console.log(e);
+  //       });
   //   }
+  // }
   // method untuk mengubah
   changeCategory = (value) => {
     this.setState({
@@ -144,6 +144,7 @@ class Home extends Component {
       });
   };
   render() {
+    console.log("dari menu", this.context.history);
     const { menus, choosenCategory, cart } = this.state;
     return (
       <div className="App">
@@ -167,7 +168,7 @@ class Home extends Component {
                   ))}
               </Row>
             </Col>
-            <Result dataCart={cart} />
+            <Result dataCart={cart} {...this.props} />
           </Row>
         </Container>
       </div>

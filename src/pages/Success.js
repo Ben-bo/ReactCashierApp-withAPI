@@ -1,8 +1,27 @@
+import axios from "axios";
 import React, { Component } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { API_URL } from "../utils/constant";
 
 class Success extends Component {
+  componentDidMount() {
+    //delete keranjang ketika pesanan udah di bayar
+    axios
+      .get(`${API_URL}keranjangs`)
+      .then((res) => {
+        const products = res.data;
+        products.map((data) => {
+          return axios
+            .delete(`${API_URL}keranjangs/${data.id}`)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
   render() {
     return (
       <Row>
