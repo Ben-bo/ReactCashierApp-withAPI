@@ -5,7 +5,6 @@ import { Home, Success } from "./pages";
 
 class App extends Component {
   render() {
-    console.log("dari app", this.props.history);
     return (
       <BrowserRouter>
         <Navbarcomponent />
