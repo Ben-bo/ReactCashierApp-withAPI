@@ -174,7 +174,11 @@ class Home extends Component {
                   ))}
               </Row>
             </Col>
-            <Result dataCart={cart} {...this.props} />
+            <Result
+              dataCart={cart}
+              {...this.props}
+              getListCart={this.getListCart}
+            />
           </Row>
         </Container>
       </div>

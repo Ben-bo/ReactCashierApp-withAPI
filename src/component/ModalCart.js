@@ -19,6 +19,8 @@ const Modalcart = ({
   subtraction,
   changeHandler,
   handleSubmit,
+  totalHarga,
+  deleteOrder,
 }) => {
   if (cartDetail) {
     return (
@@ -39,7 +41,7 @@ const Modalcart = ({
                 <Col>
                   <Form.Label>TOTAL HARGA</Form.Label>
                   <p className="text-success">
-                    <strong>Rp. {Formatnumber(cartDetail.total_harga)}</strong>
+                    <strong>Rp. {Formatnumber(totalHarga)}</strong>
                   </p>
                 </Col>
                 <Col className="text-center">
@@ -74,7 +76,7 @@ const Modalcart = ({
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger">
+          <Button variant="danger" onClick={() => deleteOrder(cartDetail.id)}>
             <FontAwesomeIcon icon={faTrash} /> DELETE
           </Button>
         </Modal.Footer>

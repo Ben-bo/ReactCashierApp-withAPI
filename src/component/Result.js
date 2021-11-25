@@ -1,5 +1,8 @@
+import axios from "axios";
 import React, { Component } from "react";
 import { Col, ListGroup, Badge, Row } from "react-bootstrap";
+import swal from "sweetalert";
+import { API_URL } from "../utils/constant";
 import Formatnumber from "../utils/formatNumber";
 import Modalcart from "./ModalCart";
 import Totalpayment from "./TotalPayment";
@@ -13,6 +16,7 @@ class Result extends Component {
       cartDetail: false,
       jumlah: 0,
       keterangan: "",
+      totalHarga: 0,
     };
   }
   handleShow = (data) => {
@@ -21,20 +25,66 @@ class Result extends Component {
       cartDetail: data,
       jumlah: data.jumlah,
       keterangan: data.keterangan,
+      totalHarga: data.total_harga,
     });
   };
   changeHandler = (event) => {
     this.setState({
       keterangan: event.target.value,
     });
-    console.log(this.state.keterangan);
   };
   handleSubmit = (event) => {
     event.preventDefault();
+    const dataCart = {
+      jumlah: this.state.jumlah,
+      total_harga: this.state.totalHarga,
+      produk: this.state.cartDetail.produk,
+      keterangan: this.state.keterangan,
+    };
+    axios
+      .put(`${API_URL}keranjangs/${this.state.cartDetail.id}`, dataCart)
+      .then((res) => {
+        this.props.getListCart();
+        swal({
+          title: "Sucess",
+          text: `${dataCart.produk.nama} telah berhasil di Update`,
+          icon: "success",
+          button: false,
+          timer: 1000,
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    this.handleClose();
+  };
+  deleteOrder = (id) => {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this imaginary file!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        axios.delete(`${API_URL}keranjangs/${id}`).then((res) => {
+          this.props.getListCart(); //setelah delete panggil lg data keranjang
+          swal(`${this.state.cartDetail.produk.nama} berhasil di Hapus`, {
+            icon: "success",
+          }).catch((e) => {
+            console.log(e);
+          });
+          this.handleClose();
+        });
+      } else {
+        swal("Pesanan Tidak jadi dihapus!");
+      }
+    });
   };
   summation = () => {
     this.setState({
       jumlah: this.state.jumlah + 1,
+      totalHarga: this.state.cartDetail.produk.harga * (this.state.jumlah + 1),
     });
   };
   subtraction = () => {
@@ -42,6 +92,8 @@ class Result extends Component {
       //lakukan pengurangan jika jumlah lebih dari 1
       this.setState({
         jumlah: this.state.jumlah - 1,
+        totalHarga:
+          this.state.cartDetail.produk.harga * (this.state.jumlah - 1),
       });
     }
   };
@@ -97,6 +149,7 @@ class Result extends Component {
               subtraction={this.subtraction}
               handleSubmit={this.handleSubmit}
               changeHandler={this.changeHandler}
+              deleteOrder={this.deleteOrder}
             />
           </ListGroup>
           <Totalpayment dataCart={dataCart} {...this.props} />
