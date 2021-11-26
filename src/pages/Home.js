@@ -163,7 +163,7 @@ class Home extends Component {
             <Col>
               <h5>Daftar produk</h5>
               <hr />
-              <Row>
+              <Row style={{ height: 450 }} className="overflow-auto">
                 {menus &&
                   menus.map((menu) => (
                     <Menu
